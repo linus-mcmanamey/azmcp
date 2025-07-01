@@ -13,7 +13,6 @@ from ..utils import AdoMcp
 
 
 class RepositoriesWidget(Widget):
-    
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.sidebar_items = [
@@ -297,5 +296,3 @@ class RepositoriesWidget(Widget):
             log_widget.write_line("---")
 
 
-# Backwards compatibility alias
-RepositoriesScreen = RepositoriesWidget

@@ -5,7 +5,7 @@
 from .home import HomeScreen
 from .workitems import WorkItemsScreen
 from .builds import BuildsScreen
-from .repositories import RepositoriesWidget, RepositoriesScreen
+from .repositories import RepositoriesWidget
 from .releases import ReleasesScreen
 from .testplans import TestPlansScreen
 from .settings import SettingsScreen
@@ -15,7 +15,6 @@ __all__ = [
     "WorkItemsScreen", 
     "BuildsScreen",
     "RepositoriesWidget",
-    "RepositoriesScreen",
     "ReleasesScreen",
     "TestPlansScreen",
     "SettingsScreen",

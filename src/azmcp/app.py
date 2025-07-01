@@ -7,25 +7,14 @@ from textual.containers import Container
 from textual.widgets import Header, Footer, TabbedContent, TabPane, Static
 from textual.reactive import reactive
 from typing import Optional
-
-from .screens import HomeScreen, WorkItemsScreen, BuildsScreen, RepositoriesWidget, ReleasesScreen, TestPlansScreen, SettingsScreen
+from azmcp.screens.repositories import RepositoriesWidget
+#from azmcp.screens import HomeScreen, WorkItemsScreen, BuildsScreen, RepositoriesWidget, ReleasesScreen, TestPlansScreen, SettingsScreen
 
 
 class AzMCPApp(App):
     CSS_PATH = "tcss/styles.tcss"
     TITLE = "Azure DevOps MCP Server"
     SUB_TITLE = "Model Context Protocol Server for Azure DevOps"
-    
-    SCREENS = {
-        "home": HomeScreen,
-        "workitems": WorkItemsScreen,
-        "builds": BuildsScreen,
-        "repositories": RepositoriesWidget,
-        "releases": ReleasesScreen,
-        "testplans": TestPlansScreen,
-        "settings": SettingsScreen,
-    }
-    
     def compose(self) -> ComposeResult:
         yield Header()
         with TabbedContent(initial="home-tab"):
@@ -45,9 +34,9 @@ class AzMCPApp(App):
                 yield Static("Settings content coming soon")
         yield Footer()
     
-    def on_tabbed_content_tab_activated(self, event: TabbedContent.TabActivated) -> None:
-        # No need for screen switching since widgets are mounted directly in tabs
-        pass
+    # def on_tabbed_content_tab_activated(self, event: TabbedContent.TabActivated) -> None:
+    #     # No need for screen switching since widgets are mounted directly in tabs
+    #     pass
 
 
 def main() -> None:

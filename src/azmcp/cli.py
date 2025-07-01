@@ -7,7 +7,7 @@ import argparse
 from typing import List, Optional
 from .app import AzMCPApp
 from .aure_login import AzureLogin
-
+from pathlib import Path
 
 def create_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
@@ -26,6 +26,8 @@ def create_parser() -> argparse.ArgumentParser:
 
 
 def main(argv: Optional[List[str]] = None) -> int:
+    sys.path.append(str(Path(__file__).parent.parent))
+    sys.path.append("src")  # Ensure src is in the path for module imports
     parser = create_parser()
     args = parser.parse_args(argv)
     
