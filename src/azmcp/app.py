@@ -4,11 +4,11 @@
 
 from textual.app import App, ComposeResult
 from textual.containers import Container
-from textual.widgets import Header, Footer, TabbedContent, TabPane
+from textual.widgets import Header, Footer, TabbedContent, TabPane, Static
 from textual.reactive import reactive
 from typing import Optional
 
-from .screens import HomeScreen, WorkItemsScreen, BuildsScreen, RepositoriesScreen, ReleasesScreen, TestPlansScreen, SettingsScreen
+from .screens import HomeScreen, WorkItemsScreen, BuildsScreen, RepositoriesWidget, ReleasesScreen, TestPlansScreen, SettingsScreen
 
 
 class AzMCPApp(App):
@@ -20,7 +20,7 @@ class AzMCPApp(App):
         "home": HomeScreen,
         "workitems": WorkItemsScreen,
         "builds": BuildsScreen,
-        "repositories": RepositoriesScreen,
+        "repositories": RepositoriesWidget,
         "releases": ReleasesScreen,
         "testplans": TestPlansScreen,
         "settings": SettingsScreen,
@@ -30,27 +30,24 @@ class AzMCPApp(App):
         yield Header()
         with TabbedContent(initial="home-tab"):
             with TabPane("Home", id="home-tab"):
-                yield Container(id="home-content")
+                yield Static("Welcome to Azure DevOps MCP Server")
             with TabPane("Work Items", id="workitems-tab"):
-                yield Container(id="workitems-content")
+                yield Static("Work Items content coming soon")
             with TabPane("Builds", id="builds-tab"):
-                yield Container(id="builds-content")
+                yield Static("Builds content coming soon")
             with TabPane("Repositories", id="repositories-tab"):
-                yield Container(id="repositories-content")
+                yield RepositoriesWidget()
             with TabPane("Releases", id="releases-tab"):
-                yield Container(id="releases-content")
+                yield Static("Releases content coming soon")
             with TabPane("Test Plans", id="testplans-tab"):
-                yield Container(id="testplans-content")
+                yield Static("Test Plans content coming soon")
             with TabPane("Settings", id="settings-tab"):
-                yield Container(id="settings-content")
+                yield Static("Settings content coming soon")
         yield Footer()
     
     def on_tabbed_content_tab_activated(self, event: TabbedContent.TabActivated) -> None:
-        tab_id = event.tab.id
-        if tab_id:
-            screen_name = tab_id.replace("-tab", "")
-            if screen_name in self.SCREENS:
-                self.switch_screen(screen_name)
+        # No need for screen switching since widgets are mounted directly in tabs
+        pass
 
 
 def main() -> None:

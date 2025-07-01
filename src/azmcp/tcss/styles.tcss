@@ -4,10 +4,34 @@
     height: 100%;
 }
 
+#main-container {
+    layout: horizontal;
+    height: 100%;
+    width: 100%;
+}
+
 #sidebar {
-    width: 20;
+    width: 25%;
     background: $surface;
     border-right: solid $primary;
+    padding: 1;
+    height: 100%;
+}
+
+#sidebar-title {
+    text-style: bold;
+    color: $primary;
+    margin: 0 0 1 0;
+}
+
+#sidebar-list {
+    height: 1fr;
+}
+
+#main-content {
+    width: 75%;
+    padding: 1;
+    height: 100%;
 }
 
 #content {
@@ -18,11 +42,16 @@
 /* Sidebar buttons */
 #sidebar Button {
     width: 100%;
-    margin: 1 0;
+    margin: 0 0 1 0;
+    text-align: left;
 }
 
 #sidebar Button:hover {
     background: $primary-background;
+}
+
+#sidebar Button:focus {
+    background: $primary;
 }
 
 /* Content areas */

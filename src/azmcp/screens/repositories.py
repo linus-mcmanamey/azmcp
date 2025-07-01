@@ -2,8 +2,8 @@
 #
 # SPDX-License-Identifier: MIT
 
-from textual.screen import Screen
-from textual.containers import Container, Horizontal
+from textual.widget import Widget
+from textual.containers import Container, Horizontal, Vertical
 from textual.widgets import Static, Button, Log
 from textual.app import ComposeResult
 import subprocess
@@ -12,29 +12,59 @@ from pathlib import Path
 from ..utils import AdoMcp
 
 
-class RepositoriesScreen(Screen):
+class RepositoriesWidget(Widget):
+    
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.sidebar_items = [
+            "Current Repository",
+            "Pull Requests", 
+            "Branches",
+            "Recent Activity",
+            "Repository Settings"
+        ]
+    
     def compose(self) -> ComposeResult:
         yield Container(
-            Static("# Repositories", id="repos-title"),
-            Static("Manage source repositories and pull requests", id="repos-subtitle"),
             Horizontal(
-                Button("List Repositories", id="list-repos-btn", variant="primary"),
-                Button("Pull Requests", id="prs-btn"),
-                Button("Branches", id="branches-btn"),
-                Button("Create PR", id="create-pr-btn", variant="success"),
-                id="repo-actions"
+                Vertical(
+                    Static("Repository Navigation", id="sidebar-title"),
+                    Button("Current Repository", id="sidebar-current-repo"),
+                    Button("Pull Requests", id="sidebar-prs"),
+                    Button("Branches", id="sidebar-branches"),
+                    Button("Recent Activity", id="sidebar-activity"),
+                    Button("Repository Settings", id="sidebar-settings"),
+                    id="sidebar"
+                ),
+                Vertical(
+                    Static("# Repositories", id="repos-title"),
+                    Static("Manage source repositories and pull requests", id="repos-subtitle"),
+                    Horizontal(
+                        Button("List Repositories", id="list-repos-btn", variant="primary"),
+                        Button("Pull Requests", id="prs-btn"),
+                        Button("Branches", id="branches-btn"),
+                        Button("Create PR", id="create-pr-btn", variant="success"),
+                        id="repo-actions"
+                    ),
+                    Log(id="repos-log"),
+                    id="main-content"
+                ),
+                id="main-container"
             ),
-            Log(id="repos-log"),
             id="repos-container"
         )
     
     def on_mount(self) -> None:
-        log_widget = self.query_one("#repos-log", Log)
-        self._show_repository_status(log_widget)
+        try:
+            log_widget = self.query_one("#repos-log", Log)
+            self._show_repository_status(log_widget)
+        except Exception:
+            pass  # Log widget not found, widget may not be fully mounted yet
     
     def on_button_pressed(self, event: Button.Pressed) -> None:
         log_widget = self.query_one("#repos-log", Log)
         
+        # Handle main action buttons
         if event.button.id == "list-repos-btn":
             self._list_repositories(log_widget)
         elif event.button.id == "prs-btn":
@@ -43,6 +73,20 @@ class RepositoriesScreen(Screen):
             self._list_branches(log_widget)
         elif event.button.id == "create-pr-btn":
             self._create_pull_request(log_widget)
+        
+        # Handle sidebar buttons
+        elif event.button.id == "sidebar-current-repo":
+            self._show_repository_status(log_widget)
+        elif event.button.id == "sidebar-prs":
+            self._list_pull_requests(log_widget)
+        elif event.button.id == "sidebar-branches":
+            self._list_branches(log_widget)
+        elif event.button.id == "sidebar-activity":
+            log_widget.write_line("Loading recent repository activity...")
+            log_widget.write_line("Recent activity functionality will be implemented here")
+        elif event.button.id == "sidebar-settings":
+            log_widget.write_line("Repository settings...")
+            log_widget.write_line("Repository settings functionality will be implemented here")
     
     def _get_current_repository_info(self) -> tuple[str, str, str]:
         try:
@@ -251,3 +295,7 @@ class RepositoriesScreen(Screen):
         except Exception as e:
             log_widget.write_line(f"Error checking repository status: {str(e)}")
             log_widget.write_line("---")
+
+
+# Backwards compatibility alias
+RepositoriesScreen = RepositoriesWidget
