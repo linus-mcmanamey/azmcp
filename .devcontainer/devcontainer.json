@@ -1,0 +1,42 @@
+{
+    "name": "azmcp",
+    "dockerFile": "Dockerfile",
+    "context": "..",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "tamasfe.even-better-toml",
+                "ms-python.isort",
+                "mtxr.sqltools",
+                "mtxr.sqltools-driver-mssql",
+                "inferrinizzard.prettier-sql-vscode",
+                "oderwat.indent-rainbow",
+                "ms-vscode.makefile-tools",
+                "ms-mssql.mssql",
+                "ms-toolsai.jupyter",
+                "ms-azure-devops.azure-pipelines",
+                "formulahendry.theme-ubuntu-style",
+                "ms-vscode-remote.remote-wsl",
+                "ms-vscode-remote.remote-containers",
+                "ms-vscode.azure-repos",
+                "ThiagoLcioBittencourt.ubuntuvscode",
+                "VisualStudioExptTeam.vscodeintellicode",
+                "mhutchie.git-graph",
+                "eamodio.gitlens",
+                "ms-python.debugpy",
+                "ms-azuretools.vscode-azure-github-copilot"
+            ],
+            "settings": [
+                {
+                    "terminal.integrated.shell.linux": "/bin/bash"
+                }
+            ]
+        }
+    },
+    "containerEnv": { "USERNAME": "${env:username}"},
+    "runArgs": ["--add-host=host.docker.internal:host-gateway", "--add-host=ollama:host-gateway", "--add-host=localhost:127.0.0.1","--cap-add=SYS_ADMIN", "--security-opt", "seccomp:unconfined"],
+    "mounts": ["source=C:/storage,target=/workspaces/storage,type=bind","source=C:/Users/${env:username}/.ssh,target=/root/.ssh,type=bind"],
+    "postCreateCommand": "chmod 700 ~/.ssh;chmod 600 ~/.ssh/*;sed -i 's/\r$//' .devcontainer/loader_script.sh; chmod -R 775 .devcontainer/loader_script.sh; .devcontainer/loader_script.sh",
+    "remoteUser": "root"
+    }

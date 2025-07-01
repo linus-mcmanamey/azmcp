@@ -1,0 +1,10 @@
+{
+    "files.autoSave": "onFocusChange",
+    "chat.mcp.serverSampling": {
+        "unify_2_1_dm_pipeline/.vscode/mcp.json: github": {
+            "allowedModels": [
+                "github.copilot-chat/claude-sonnet-4"
+            ]
+        }
+    }
+}
