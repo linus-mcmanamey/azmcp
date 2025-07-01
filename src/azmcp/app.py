@@ -40,51 +40,61 @@ class AzMCPApp(App):
         yield Footer()
 
     def _get_home_view(self) -> Container:
-        container = Container(id="home-view")
-        container.mount(Static("# Azure DevOps MCP Server", id="title"))
-        container.mount(Static("Welcome to the Azure DevOps Model Context Protocol Server interface.", id="subtitle"))
-        container.mount(Static("This application provides a terminal user interface for interacting with Azure DevOps services", id="description"))
-        action_buttons = Horizontal(id="action-buttons")
-        action_buttons.mount(Button("Connect to Azure DevOps", id="connect-btn", variant="success"))
-        action_buttons.mount(Button("View Documentation", id="docs-btn"))
-        container.mount(action_buttons)
-        return container
+        return Container(
+            Static("# Azure DevOps MCP Server", id="title"),
+            Static("Welcome to the Azure DevOps Model Context Protocol Server interface.", id="subtitle"),
+            Static("This application provides a terminal user interface for interacting with Azure DevOps services", id="description"),
+            Static("Authentication Status: Authenticated", id="auth-status"),
+            Horizontal(
+                Button("Connect to Azure DevOps", id="connect-btn", variant="success"),
+                Button("View Documentation", id="docs-btn"),
+                id="action-buttons"
+            ),
+            Log(id="main-log"),
+            id="home-view"
+        )
 
     def _get_workitems_view(self) -> Container:
-        container = Container(id="workitems-view")
-        container.mount(Static("# Work Items", id="workitems-title"))
-        container.mount(Static("Manage Azure DevOps work items", id="workitems-subtitle"))
-        action_buttons = Horizontal(id="workitem-actions")
-        action_buttons.mount(Button("Create Work Item", id="create-wi-btn", variant="primary"))
-        action_buttons.mount(Button("Search Work Items", id="search-wi-btn"))
-        action_buttons.mount(Button("My Work Items", id="my-wi-btn"))
-        container.mount(action_buttons)
-        container.mount(Log(id="workitems-log"))
-        return container
+        return Container(
+            Static("# Work Items", id="workitems-title"),
+            Static("Manage Azure DevOps work items", id="workitems-subtitle"),
+            Horizontal(
+                Button("Create Work Item", id="create-wi-btn", variant="primary"),
+                Button("Search Work Items", id="search-wi-btn"),
+                Button("My Work Items", id="my-wi-btn"),
+                id="workitem-actions"
+            ),
+            Log(id="workitems-log"),
+            id="workitems-view"
+        )
     
     def _get_builds_view(self) -> Container:
-        container = Container(id="builds-view")
-        container.mount(Static("# Build Pipelines", id="builds-title"))
-        container.mount(Static("Monitor and manage build pipelines", id="builds-subtitle"))
-        action_buttons = Horizontal(id="build-actions")
-        action_buttons.mount(Button("View Builds", id="view-builds-btn", variant="primary"))
-        action_buttons.mount(Button("Queue Build", id="queue-build-btn"))
-        action_buttons.mount(Button("Build History", id="build-history-btn"))
-        container.mount(action_buttons)
-        container.mount(Log(id="builds-log"))
-        return container
+        return Container(
+            Static("# Build Pipelines", id="builds-title"),
+            Static("Monitor and manage build pipelines", id="builds-subtitle"),
+            Horizontal(
+                Button("View Builds", id="view-builds-btn", variant="primary"),
+                Button("Queue Build", id="queue-build-btn"),
+                Button("Build History", id="build-history-btn"),
+                id="build-actions"
+            ),
+            Log(id="builds-log"),
+            id="builds-view"
+        )
     
     def _get_repos_view(self) -> Container:
-        container = Container(id="repos-view")
-        container.mount(Static("# Repositories", id="repos-title"))
-        container.mount(Static("Manage source repositories and pull requests", id="repos-subtitle"))
-        action_buttons = Horizontal(id="repo-actions")
-        action_buttons.mount(Button("List Repositories", id="list-repos-btn", variant="primary"))
-        action_buttons.mount(Button("Pull Requests", id="prs-btn"))
-        action_buttons.mount(Button("Branches", id="branches-btn"))
-        container.mount(action_buttons)
-        container.mount(Log(id="repos-log"))
-        return container
+        return Container(
+            Static("# Repositories", id="repos-title"),
+            Static("Manage source repositories and pull requests", id="repos-subtitle"),
+            Horizontal(
+                Button("List Repositories", id="list-repos-btn", variant="primary"),
+                Button("Pull Requests", id="prs-btn"),
+                Button("Branches", id="branches-btn"),
+                id="repo-actions"
+            ),
+            Log(id="repos-log"),
+            id="repos-view"
+        )
     
     def on_button_pressed(self, event: Button.Pressed) -> None:
         button_id = event.button.id
@@ -136,7 +146,9 @@ class AzMCPApp(App):
     
     def _get_current_log(self) -> Optional[Log]:
         try:
-            if self.current_view == "workitems":
+            if self.current_view == "home":
+                return self.query_one("#main-log", Log)
+            elif self.current_view == "workitems":
                 return self.query_one("#workitems-log", Log)
             elif self.current_view == "builds":
                 return self.query_one("#builds-log", Log)
