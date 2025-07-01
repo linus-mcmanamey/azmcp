@@ -1,0 +1,89 @@
+/* Main layout */
+#main {
+    layout: horizontal;
+    height: 100%;
+}
+
+#sidebar {
+    width: 20;
+    background: $surface;
+    border-right: solid $primary;
+}
+
+#content {
+    width: 1fr;
+    padding: 1;
+}
+
+/* Sidebar buttons */
+#sidebar Button {
+    width: 100%;
+    margin: 1 0;
+}
+
+#sidebar Button:hover {
+    background: $primary-background;
+}
+
+/* Content areas */
+#title {
+    text-style: bold;
+    color: $primary;
+    margin: 1 0;
+}
+
+#subtitle {
+    color: $text-muted;
+    margin: 0 0 2 0;
+}
+
+#description {
+    margin: 1 0;
+    padding: 1;
+    background: $surface;
+    border: solid $primary;
+}
+
+/* Action buttons */
+#action-buttons {
+    margin: 2 0;
+    height: auto;
+}
+
+#action-buttons Button {
+    margin: 0 1;
+}
+
+#workitem-actions, #build-actions, #repo-actions {
+    margin: 2 0;
+    height: auto;
+}
+
+#workitem-actions Button, #build-actions Button, #repo-actions Button {
+    margin: 0 1;
+}
+
+/* Log widgets */
+Log {
+    height: 1fr;
+    margin: 2 0 0 0;
+    border: solid $primary;
+}
+
+/* View containers */
+#home-view, #workitems-view, #builds-view, #repos-view {
+    height: 100%;
+    padding: 1;
+}
+
+/* Titles in views */
+#workitems-title, #builds-title, #repos-title {
+    text-style: bold;
+    color: $primary;
+    margin: 0 0 1 0;
+}
+
+#workitems-subtitle, #builds-subtitle, #repos-subtitle {
+    color: $text-muted;
+    margin: 0 0 2 0;
+}

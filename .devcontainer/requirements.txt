@@ -6,6 +6,7 @@ pydantic
 typer
 asyncio
 pydantic
+textual
 azure-identity
 azure-core
 azure-synapse-artifacts

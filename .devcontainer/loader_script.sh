@@ -9,7 +9,7 @@ git config --global credential.helper store
 git config --global credential.interactive auto
 git config --global credential.useHttpPath true
 git config --global user.email "linus.mcmanamey@gmail.com"
-git config --global user.name "linus mcmanamey"
+git config --global user.name "linus-mcmanamey"
 git config --global init.defaultBranch main
 ##git config --global --add safe.directory /workspaces/*
 git config --global http.proxy http://proxy.police.tas.gov.au:8080

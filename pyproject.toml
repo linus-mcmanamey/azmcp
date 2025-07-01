@@ -24,12 +24,23 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
-dependencies = []
+dependencies = [
+  "textual>=0.41.0",
+  "azure-devops>=7.1.0b4",
+  "azure-identity>=1.15.0",
+  "httpx>=0.24.0",
+  "pydantic>=2.0.0",
+  "typer>=0.9.0",
+]
+
+[project.scripts]
+azmcp = "azmcp.cli:main"
+azmcp-app = "azmcp.app:main"
 
 [project.urls]
-Documentation = "https://github.com/U.N. Owen/azmcp#readme"
-Issues = "https://github.com/U.N. Owen/azmcp/issues"
-Source = "https://github.com/U.N. Owen/azmcp"
+Documentation = "https://github.com/linus-mcmanamey/azmcp#readme"
+Issues = "https://github.com/linus-mcmanamey/azmcp/issues"
+Source = "https://github.com/linus-mcmanamey/azmcp"
 
 [tool.hatch.version]
 path = "src/azmcp/__about__.py"
